@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Visualizer</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <h1>Sorting Algorithms Visualizer</h1>
+      <div class="controls">
+        <button onclick="generateRandomArray(slider.value)">Randomize</button>
+        <button onclick="process()">solve</button>
+        <select name="select" id="select">
+          <option value="1">Bubble Sort</option>
+          <option value="2">Heap Sort</option>
+          <option value="3">Insertion Sort</option>
+          <option value="4">Quick Sort</option>
+        </select>
+        <input type="range" min="1" max="100" value="10" id="Range" />
+        <p>Value: <span id="demo"></span></p>
+      </div>
+
+      <div class="action" id="action"></div>
+    </main>
+  </body>
+</html>
