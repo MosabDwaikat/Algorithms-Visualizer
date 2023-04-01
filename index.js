@@ -12,22 +12,6 @@ const rangeHandler = () => {
 };
 rangeHandler();
 
-const displayArray = () => {
-  action.innerHTML = "";
-  arr.map((e, index) => {
-    action.innerHTML += `<div class='array-element' id="${index}">${e}</div>`;
-    document.getElementById(`${index}`).style.height = 20 + e * 5;
-    document.getElementById(`${index}`).style.left = 60 * index;
-  });
-};
-
-const generateRandomArray = (length) => {
-  arr = Array.from({ length }, () => Math.floor(Math.random() * 100));
-  action.innerHTML = "";
-  displayArray();
-  console.log(arr);
-};
-
 async function BubbleSort(arr) {
   for (var i = 0; i < arr.length; i++) {
     for (var j = 0; j < arr.length - i - 1; j++) {
@@ -153,7 +137,6 @@ async function Quicksort(arr, s, e) {
     if (rightI !== e) await Quicksort(arr, rightI + 1, e);
   }
 }
-// ready algos ^^^
 
 async function InsertionSort(arr) {
   if (arr.length === 1) markDone(0);
@@ -183,35 +166,53 @@ async function InsertionSort(arr) {
     }
   }
 }
+// ready algos ^^^
 
 async function process() {
   let algo = document.getElementById("select").value;
+  document.getElementById("randomize").disabled = true;
+  document.getElementById("solve").disabled = true;
+  document.getElementById("select").disabled = true;
+  document.getElementById("Range").disabled = true;
 
   switch (algo) {
     case "1":
-      BubbleSort(arr);
-      console.log(algo);
+      await BubbleSort(arr);
       break;
     case "2":
-      HeapSort(arr);
-      console.log(algo);
+      await HeapSort(arr);
       break;
     case "3":
-      InsertionSort(arr);
-      console.log(algo);
+      await InsertionSort(arr);
       break;
     case "4":
       await Quicksort(arr, 0, arr.length - 1);
-      console.log(algo);
       break;
 
     default:
-      console.log(algo);
       break;
   }
+  document.getElementById("randomize").disabled = false;
 }
 
-//************************************ */
+// Utilities
+const generateRandomArray = (length) => {
+  arr = Array.from({ length }, () => Math.floor(Math.random() * 100));
+  action.innerHTML = "";
+  displayArray();
+  document.getElementById("solve").disabled = false;
+  document.getElementById("select").disabled = false;
+  document.getElementById("Range").disabled = false;
+};
+
+const displayArray = () => {
+  action.innerHTML = "";
+  arr.map((e, index) => {
+    action.innerHTML += `<div class='array-element' id="${index}">${e}</div>`;
+    document.getElementById(`${index}`).style.height = 20 + e * 5;
+    document.getElementById(`${index}`).style.left = 60 * index;
+  });
+};
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

@@ -8,8 +8,10 @@
     <main>
       <h1>Sorting Algorithms Visualizer</h1>
       <div class="controls">
-        <button onclick="generateRandomArray(slider.value)">Randomize</button>
-        <button onclick="process()">solve</button>
+        <button onclick="generateRandomArray(slider.value)" id="randomize">
+          Randomize
+        </button>
+        <button onclick="process()" id="solve" disabled>solve</button>
         <select name="select" id="select">
           <option value="1">Bubble Sort</option>
           <option value="2">Heap Sort</option>
