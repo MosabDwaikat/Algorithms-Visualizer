@@ -168,6 +168,36 @@ async function InsertionSort(arr) {
 }
 // ready algos ^^^
 
+async function SelectionSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+    if (minIndex !== i) {
+      const { x1, x2 } = color2divs(i, minIndex);
+      // document.getElementById(j + 1).style.backgroundColor = "blue";
+      await sleep(500);
+
+      let temp = arr[i];
+      arr[i] = arr[minIndex];
+      arr[minIndex] = temp;
+
+      swap(x1, x2);
+      await sleep(2000);
+      colorback(x1, x2);
+    }
+    markDone(i);
+  }
+  return arr;
+}
+async function tr() {
+  await selectionSort(arr);
+  console.log(arr);
+}
+
 async function process() {
   let algo = document.getElementById("select").value;
   document.getElementById("randomize").disabled = true;
@@ -188,7 +218,9 @@ async function process() {
     case "4":
       await Quicksort(arr, 0, arr.length - 1);
       break;
-
+    case "5":
+      await SelectionSort(arr);
+      break;
     default:
       break;
   }
