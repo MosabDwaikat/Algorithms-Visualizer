@@ -256,6 +256,7 @@ async function process() {
       break;
   }
   document.getElementById("randomize").disabled = false;
+  document.getElementById("Range").disabled = false;
 }
 
 // Utilities
