@@ -44,7 +44,7 @@ select:disabled {
 .action {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 800px;
   text-align: center;
   display: flex;
   align-items: flex-end;

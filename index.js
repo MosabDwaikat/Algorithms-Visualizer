@@ -132,7 +132,6 @@ async function Quicksort(arr, s, e) {
     }
     markDone(leftI);
     await sleep(0.5 * T);
-    console.log(leftI, rightI);
 
     if (leftI !== s) await Quicksort(arr, s, leftI - 1);
     if (rightI !== e) await Quicksort(arr, rightI + 1, e);
@@ -271,10 +270,10 @@ const generateRandomArray = (length) => {
 
 const displayArray = () => {
   action.innerHTML = "";
-  let count = slider.value;
+  let count = slider.value < 3 ? 3 : slider.value;
   let width = document.documentElement.clientWidth - 50;
   let fontSize = width / (3 * count);
-  console.log(width);
+
   arr.map((e, index) => {
     action.innerHTML += `<div class='array-element' id="${index}">${e}</div>`;
     document.getElementById(`${index}`).style.height = fontSize + 10 + e * 5;
