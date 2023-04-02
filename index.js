@@ -2,6 +2,7 @@ var slider = document.getElementById("Range");
 var output = document.getElementById("demo");
 var action = document.getElementById("action");
 var arr = [];
+const T = 200; //time factor
 
 const rangeHandler = () => {
   output.innerHTML = slider.value;
@@ -16,7 +17,7 @@ async function BubbleSort(arr) {
   for (var i = 0; i < arr.length; i++) {
     for (var j = 0; j < arr.length - i - 1; j++) {
       const { x1, x2 } = color2divs(j, j + 1);
-      await sleep(1000);
+      await sleep(T);
 
       if (arr[j] > arr[j + 1]) {
         var temp = arr[j];
@@ -25,13 +26,13 @@ async function BubbleSort(arr) {
 
         swap(x1, x2);
 
-        await sleep(2000);
+        await sleep(2 * T);
       }
-      await sleep(500);
+      await sleep(0.5 * T);
       colorback(x1, x2);
     }
     markDone(arr.length - 1 - i);
-    await sleep(500);
+    await sleep(0.5 * T);
   }
 }
 
@@ -44,15 +45,15 @@ async function HeapSort(arr) {
   // One by one extract an element from heap
   for (var i = N - 1; i > 0; i--) {
     // Move current root to end
-    await sleep(2000);
+    await sleep(2 * T);
     const { x1, x2 } = color2divs(0, i);
-    await sleep(500);
+    await sleep(0.5 * T);
 
     var temp = arr[0];
     arr[0] = arr[i];
     arr[i] = temp;
     swap(x1, x2);
-    await sleep(2000);
+    await sleep(2 * T);
     colorback(x1, x2);
     markDone(i);
     // call max heapify on the reduced heap
@@ -92,7 +93,7 @@ function heapify(arr, N, i) {
 async function Quicksort(arr, s, e) {
   if (s === e) {
     markDone(s);
-    await sleep(1000);
+    await sleep(T);
     return;
   } else {
     var pivot = arr[s];
@@ -103,34 +104,34 @@ async function Quicksort(arr, s, e) {
       if (arr[i] <= pivot) {
         const { x1, x2 } = color2divs(i, leftI);
         document.getElementById(leftI).style.backgroundColor = "blue";
-        await sleep(500);
+        await sleep(0.5 * T);
 
         var sw = arr[i];
         arr[i] = arr[leftI];
         arr[leftI] = sw;
 
         swap(x1, x2);
-        await sleep(2000);
+        await sleep(2 * T);
         colorback(x1, x2);
         leftI++;
         i++;
       } else {
         const { x1, x2 } = color2divs(i, rightI);
         document.getElementById(leftI).style.backgroundColor = "blue";
-        await sleep(500);
+        await sleep(0.5 * T);
 
         var sw = arr[i];
         arr[i] = arr[rightI];
         arr[rightI] = sw;
 
         swap(x1, x2);
-        await sleep(2000);
+        await sleep(2 * T);
         colorback(x1, x2);
         rightI--;
       }
     }
     markDone(leftI);
-    await sleep(500);
+    await sleep(0.5 * T);
     console.log(leftI, rightI);
 
     if (leftI !== s) await Quicksort(arr, s, leftI - 1);
@@ -147,17 +148,17 @@ async function InsertionSort(arr) {
       j = i - 1;
       // const { x1, x2 } = color2divs(j, j + 1);
       document.getElementById(j + 1).style.backgroundColor = "blue";
-      await sleep(1500);
+      await sleep(1.5 * T);
       while (j >= 0 && arr[j] > key) {
         const { x1, x2 } = color2divs(j, j + 1);
         document.getElementById(j + 1).style.backgroundColor = "blue";
-        await sleep(500);
+        await sleep(0.5 * T);
 
         var sw = arr[j + 1];
         arr[j + 1] = arr[j];
         arr[j] = sw;
         swap(x1, x2);
-        await sleep(2000);
+        await sleep(2 * T);
         colorback(x1, x2);
         markAllDone(i);
         j--;
@@ -166,7 +167,6 @@ async function InsertionSort(arr) {
     }
   }
 }
-// ready algos ^^^
 
 async function SelectionSort(arr) {
   for (let i = 0; i < arr.length - 1; i++) {
@@ -179,24 +179,52 @@ async function SelectionSort(arr) {
     if (minIndex !== i) {
       const { x1, x2 } = color2divs(i, minIndex);
       // document.getElementById(j + 1).style.backgroundColor = "blue";
-      await sleep(500);
+      await sleep(0.5 * T);
 
       let temp = arr[i];
       arr[i] = arr[minIndex];
       arr[minIndex] = temp;
 
       swap(x1, x2);
-      await sleep(2000);
+      await sleep(2 * T);
       colorback(x1, x2);
     }
     markDone(i);
   }
-  return arr;
+  markDone(arr.length - 1);
 }
-async function tr() {
-  await selectionSort(arr);
-  console.log(arr);
+
+async function gnomeSort(arr) {
+  let index = 0;
+
+  while (index < arr.length) {
+    if (index == 0) index++;
+    if (arr[index] >= arr[index - 1]) {
+      markDone(index - 1);
+      markDone(index);
+      await sleep(T);
+      index++;
+    } else {
+      const { x1, x2 } = color2divs(index - 1, index);
+      document.getElementById(index).style.backgroundColor = "blue";
+      await sleep(0.5 * T);
+
+      let temp = 0;
+      temp = arr[index];
+      arr[index] = arr[index - 1];
+      arr[index - 1] = temp;
+
+      swap(x1, x2);
+      await sleep(2 * T);
+      colorback(x1, x2);
+
+      index--;
+    }
+  }
+  markDone(arr.length - 1);
+  return;
 }
+// ready algos ^^^
 
 async function process() {
   let algo = document.getElementById("select").value;
@@ -221,6 +249,9 @@ async function process() {
     case "5":
       await SelectionSort(arr);
       break;
+    case "6":
+      await gnomeSort(arr);
+      break;
     default:
       break;
   }
@@ -239,10 +270,17 @@ const generateRandomArray = (length) => {
 
 const displayArray = () => {
   action.innerHTML = "";
+  let count = slider.value;
+  let width = document.documentElement.clientWidth - 50;
+  let fontSize = width / (3 * count);
+  console.log(width);
   arr.map((e, index) => {
     action.innerHTML += `<div class='array-element' id="${index}">${e}</div>`;
-    document.getElementById(`${index}`).style.height = 20 + e * 5;
-    document.getElementById(`${index}`).style.left = 60 * index;
+    document.getElementById(`${index}`).style.height = fontSize + 10 + e * 5;
+    document.getElementById(`${index}`).style.width = width / 2 / count;
+    document.getElementById(`${index}`).style.fontSize = fontSize;
+    document.getElementById(`${index}`).style.left =
+      (width / 2 / count) * 2 * index;
   });
 };
 

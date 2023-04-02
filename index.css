@@ -7,29 +7,49 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: cursive;
 }
 .controls {
   display: flex;
+  border: 2px solid;
+  background-color: chocolate;
 }
 button {
   width: 100px;
   height: 30px;
   margin: 10px;
+  font-family: cursive;
+  color: chocolate;
+  background-color: rgb(105, 52, 14);
 }
-input {
+button:disabled {
+  color: chocolate;
+  background-color: rgb(255, 126, 34);
+}
+.slider {
   margin: 10px;
 }
 select {
   height: 30px;
   margin: auto 10px;
+  font-family: cursive;
+  color: chocolate;
+  background-color: rgb(105, 52, 14);
 }
+select:disabled {
+  color: chocolate;
+  background-color: rgb(255, 126, 34);
+}
+
 .action {
   position: relative;
   width: 100%;
-  height: 550px;
+  height: 600px;
   text-align: center;
   display: flex;
   align-items: flex-end;
+  border: 2px solid;
+  background-color: darkkhaki;
 }
 .array-element {
   position: absolute;
@@ -37,8 +57,10 @@ select {
   order: 0;
   width: 30px;
   height: 30px;
+  font-family: cursive;
+  font-size: 10;
   background-color: green;
   border: 1px solid;
   margin: 10px;
-  transition: left 2s;
+  transition: left 500ms;
 }
